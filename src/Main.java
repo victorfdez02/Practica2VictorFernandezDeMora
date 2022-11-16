@@ -355,6 +355,7 @@ public class Main extends JFrame {
 
     }
 
+    //TODO Degradado en la parte de la izquierda
     /*public void paint(Graphics g){
         GradientPaint gp = new GradientPaint(500, 100, Color.CYAN, 700, 700, Color.PINK);
         Graphics2D g2d = (Graphics2D) g;
