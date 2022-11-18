@@ -23,6 +23,7 @@ public class Main extends JFrame {
     JFileChooser selecArchivo;
     JCheckBox checkArchivo;
     File file;
+    JButton botonSalir;
 
     public Main() throws IOException {
         setLayout(new BorderLayout());
@@ -198,14 +199,7 @@ public class Main extends JFrame {
         panelResultado = new JEditorPane();
         panelResultado.setContentType("text/html");
         panelResultado.setBackground(Color.decode("#94d2bd"));
-        panelResultado.setText(
-                "<h1 align=center>Resultado Formulario</h1><br>" +
-                        "<h3>Nombre: " + nombre.getText() + "</h3>" +
-                        "<h3>Correo electronico: " + correo.getText() + "</h3>" +
-                        "<h3>Contraseña: " + contr.getText() + "</h3>" +
-                        "<h3>Pais: " + pais.getSelectedItem().toString() + "</h3>" +
-                        "<h3>Provincia/Estado: " + provincia.getSelectedItem().toString() + "</h3>"
-        );
+
         cuartaT.add(panelResultado, BorderLayout.NORTH);
 
         JPanel panelInferior = new JPanel();
@@ -251,20 +245,56 @@ public class Main extends JFrame {
         cuartaT.setBackground(Color.decode("#94d2bd"));
     }
 
-    public void setQuintaT(){
-        quintaT.setLayout(new BorderLayout());
-        JLabel labelGuardado = new JLabel("Se ha guardado correctamente el archivo");
-        quintaT.add(labelGuardado,BorderLayout.NORTH);
+    public void mostrarJEditorPane(){
+        panelResultado.setText(
+                "<h1 align=center>Resultado Formulario</h1><br>" +
+                        "<h3>Nombre: " + nombre.getText() + "</h3>" +
+                        "<h3>Correo electronico: " + correo.getText() + "</h3>" +
+                        "<h3>Contraseña: " + contr.getText() + "</h3>" +
+                        "<h3>Pais: " + pais.getSelectedItem().toString() + "</h3>" +
+                        "<h3>Provincia/Estado: " + provincia.getSelectedItem().toString() + "</h3>"
+        );
     }
 
-    //TODO poner bonito la tarjeta 5
+    public void setQuintaT(){
+        GridBagConstraints uno = new GridBagConstraints();
+        uno.gridx = 0;
+        uno.gridy = 0;
+        uno.insets = new Insets(5,5,5,5);
+        uno.anchor = GridBagConstraints.CENTER;
+        quintaT.setLayout(new GridBagLayout());
+        JLabel labelGuardado = new JLabel("Se ha guardado correctamente el archivo");
+        quintaT.add(labelGuardado,uno);
+        quintaT.setBackground(Color.decode("#94d2bd"));
+    }
+
     public void auxQuintaT(){
+        GridBagConstraints dos = new GridBagConstraints();
+        GridBagConstraints tres = new GridBagConstraints();
+
+        dos.gridx = 0;
+        dos.gridy = 1;
+        dos.insets = new Insets(5,5,5,5);
+        dos.anchor = GridBagConstraints.CENTER;
+        tres.gridx = 0;
+        tres.gridy = 2;
+        tres.insets = new Insets(5,5,5,5);
+        tres.anchor = GridBagConstraints.CENTER;
+
         auxLabel = new JLabel();
         file = selecArchivo.getSelectedFile();
         String ruta = file.getAbsolutePath();
-        auxLabel.setText(ruta);
-        System.out.println(ruta);
-        quintaT.add(auxLabel,BorderLayout.CENTER);
+        auxLabel.setText("La ruta del archivo es: " + ruta);
+        quintaT.add(auxLabel,dos);
+
+        botonSalir = new JButton("SALIR");
+        botonSalir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        quintaT.add(botonSalir,tres);
     }
 
     public void insertarProvEst(String pais) throws IOException {
@@ -343,8 +373,10 @@ public class Main extends JFrame {
                     if (!comprobarContrasenia(contr.getText()))
                         return;
                 }
-                if (!panelDerecha.getComponent(4).isShowing())
+                if (!panelDerecha.getComponent(4).isShowing()) {
                     tarjetasLayout.next(panelDerecha);
+                    mostrarJEditorPane();
+                }
                 if (panelDerecha.getComponent(4).isShowing())
                     auxQuintaT();
             }
