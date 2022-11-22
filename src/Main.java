@@ -25,6 +25,7 @@ public class Main extends JFrame {
     File file;
     JButton botonSalir;
 
+    //Metodo contructor, que inicia los principales init.
     public Main() throws IOException {
         setLayout(new BorderLayout());
 
@@ -34,18 +35,14 @@ public class Main extends JFrame {
         initPantalla();
     }
 
+    //JPanel de la derecha, para despues con el paint, modificarlo
     private void initJPanel() {
         panelIzquierda = new JPanel();
         panelIzquierda.setPreferredSize(new Dimension(200, 600));
-        panelIzquierda.setBackground(Color.decode("#006d77"));
-
-        img = new JLabel();
-        img.setIcon(new ImageIcon("src/img/logo.png"));
-        img.setBounds(550, 200, 250, 200);
-        panelIzquierda.add(img);
         add(panelIzquierda, BorderLayout.WEST);
     }
 
+    //Crear las tarjetas e iniciar todos sus métodos
     public void initTarjetas() throws IOException {
         tarjetasLayout = new CardLayout();
         panelDerecha = new JPanel();
@@ -72,25 +69,28 @@ public class Main extends JFrame {
 
     }
 
+    //Presentacion del formulario con el que contenido que debera rellenar el usuario
     public void setPrimeraT() {
         primeraT.setLayout(new BorderLayout());
         JEditorPane je = new JEditorPane();
         je.setContentType("text/html");
         je.setEditable(false);
         je.setText(
+                "<font size=6>"+
                         "<br><p marginwidth=30>Con este programa rellenaras un formulario que posteriomente de permitira enviar todos tus datos a un fichero que se almacenara en tu disco duro.</p>" +
                         "<br><ul>" +
                         "<li>Datos personales</li>" +
                         "<li>Direccion y residencia</li>" +
                         "<li>Comprobacion de los datos introducidos</li>" +
                         "<li>Fin del programa</li>" +
-                        "</ul>"
+                        "</ul>"+
+                "</font>"
         );
         je.setBackground(Color.decode("#94d2bd"));
-        je.setFont(new Font("Verdana", Font.PLAIN, 88));
         primeraT.add(je, BorderLayout.CENTER);
     }
 
+    //Rellenar informacion personal (nombre,apellidos y correo)
     public void setSegundaT() {
         segundaT.setLayout(new GridBagLayout());
 
@@ -152,6 +152,7 @@ public class Main extends JFrame {
         segundaT.setBackground(Color.decode("#94d2bd"));
     }
 
+    //Creacion de los ComboBox para poder seleccionar el pais y la provincia de cada pais
     public void setTerceraT() throws IOException {
         terceraT.setLayout(new GridBagLayout());
         JLabel texto = new JLabel("Selecciona tu pais y provincia/estado");
@@ -193,6 +194,7 @@ public class Main extends JFrame {
         terceraT.add(provincia, c3);
     }
 
+    //Crear el JChooseFile, para que el usuario pueda guardar el contenido.
     public void setCuartaT() {
         cuartaT.setLayout(new BorderLayout());
         panelResultado = new JEditorPane();
@@ -244,17 +246,24 @@ public class Main extends JFrame {
         cuartaT.setBackground(Color.decode("#94d2bd"));
     }
 
+    //Mostar el JEditorPane con la informacion actualizada del formulario
     public void mostrarJEditorPane(){
         panelResultado.setText(
-                "<h1 align=center>Resultado Formulario</h1><br>" +
-                        "<h3>Nombre: " + nombre.getText() + "</h3>" +
-                        "<h3>Correo electronico: " + correo.getText() + "</h3>" +
-                        "<h3>Contraseña: " + contr.getText() + "</h3>" +
-                        "<h3>Pais: " + pais.getSelectedItem().toString() + "</h3>" +
-                        "<h3>Provincia/Estado: " + provincia.getSelectedItem().toString() + "</h3>"
+            "<h1 align=center>Resultado Formulario</h1><br>" +
+                "<div marginwidth=30>"+
+                "<font size=6>"+
+                    "<p>Nombre: " + nombre.getText() + "</p>" +
+                    "<p>Correo electronico: " + correo.getText() + "</p>" +
+                    "<p>Contraseña: " + contr.getText() + "</p>" +
+                    "<p>Pais: " + pais.getSelectedItem().toString() + "</p>" +
+                    "<p>Provincia/Estado: " + provincia.getSelectedItem().toString() + "</p>"+
+                    "</div>"+
+                "</font>"
         );
+        panelResultado.setEditable(false);
     }
 
+    //Mostar la ruta de donde se ha guardado el archivo
     public void setQuintaT(){
         GridBagConstraints uno = new GridBagConstraints();
         uno.gridx = 0;
@@ -267,6 +276,7 @@ public class Main extends JFrame {
         quintaT.setBackground(Color.decode("#94d2bd"));
     }
 
+    //Consigo recuperar la ruta de donde se ha guardado la informacion del fichero
     public void auxQuintaT(){
         GridBagConstraints dos = new GridBagConstraints();
         GridBagConstraints tres = new GridBagConstraints();
@@ -296,6 +306,7 @@ public class Main extends JFrame {
         quintaT.add(botonSalir,tres);
     }
 
+    //Añadir las provincias / estados de cada pais
     public void insertarProvEst(String pais) throws IOException {
         provincia.removeAllItems();
         File f = new File("src/textos/espania.txt");
@@ -321,6 +332,7 @@ public class Main extends JFrame {
         }
     }
 
+    //Metodo para comprobar si el correo es válido o no
     public boolean comprobarCorreo(String correo) {
         Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
         Matcher mather = pattern.matcher(correo);
@@ -336,6 +348,7 @@ public class Main extends JFrame {
         }
     }
 
+    //Metodo para comprobar los requisitos de la contraseña
     public boolean comprobarContrasenia(String contrasenia) {
         final String PASSWORD_REGEX = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&?*+=]).{8,16}$";
         final Pattern PASSWORD_PATTERN = Pattern.compile(PASSWORD_REGEX);
@@ -350,12 +363,16 @@ public class Main extends JFrame {
         }
     }
 
+    //Configurar los botones de siguiente y atras para cambiar de tarjetas.
     public void initCambiarTarjetas() {
 
         panelAbajo = new JPanel();
         panelAbajo.setLayout(new FlowLayout(FlowLayout.RIGHT, 20, 0));
         JButton sig = new JButton("Siguiente");
         JButton atras = new JButton("Atrás");
+
+        sig.setBackground(Color.decode("#94d2bd"));
+        atras.setBackground(Color.decode("#94d2bd"));
         atras.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -383,17 +400,10 @@ public class Main extends JFrame {
         panelAbajo.add(atras, BorderLayout.EAST);
         panelAbajo.add(sig, BorderLayout.EAST);
         add(panelAbajo, BorderLayout.SOUTH);
-
+        panelAbajo.setBackground(Color.decode("#006d77"));
     }
 
-    //TODO Degradado en la parte de la izquierda
-    /*public void paint(Graphics g){
-        GradientPaint gp = new GradientPaint(500, 100, Color.CYAN, 700, 700, Color.PINK);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setPaint(gp);
-        g2d.fillRect(500,100,200,600);
-    }*/
-
+    //Tamaño del JFrame y visualización
     private void initPantalla() {
 
         setTitle("Formulario"); //Título del JFrame
@@ -402,8 +412,26 @@ public class Main extends JFrame {
         setVisible(true); //Mostrar JFrame
     }
 
+    //Inicio el contructor
     public static void main(String[] args) throws IOException {
         new Main();
+    }
+
+    //Pintar degradado con logo y texto a la izq del JFrame
+    public void paint(Graphics g){
+        super.paint(g);
+        GradientPaint gp = new GradientPaint(0, 0, Color.decode("#94d2bd"), 200, 100, Color.decode("#006d77"));
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setPaint(gp);
+        g2d.fillRect(0,0,200,771);
+
+        Toolkit t = Toolkit.getDefaultToolkit();
+        Image imagen = t.getImage ("src/img/logo.png");
+        g2d.drawImage(imagen, 15, 100, this);
+
+        g2d.setColor(Color.BLACK);
+        g2d.setFont(new Font("Verdana",Font.PLAIN,30));
+        g2d.drawString("Formulario", 20, 350);
     }
 }
 
