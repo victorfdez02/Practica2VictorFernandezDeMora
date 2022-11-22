@@ -78,17 +78,16 @@ public class Main extends JFrame {
         je.setContentType("text/html");
         je.setEditable(false);
         je.setText(
-                "<font size=10 face=Verdana>" +
                         "<br><p marginwidth=30>Con este programa rellenaras un formulario que posteriomente de permitira enviar todos tus datos a un fichero que se almacenara en tu disco duro.</p>" +
                         "<br><ul>" +
                         "<li>Datos personales</li>" +
                         "<li>Direccion y residencia</li>" +
                         "<li>Comprobacion de los datos introducidos</li>" +
                         "<li>Fin del programa</li>" +
-                        "</ul>" +
-                        "</font"
+                        "</ul>"
         );
         je.setBackground(Color.decode("#94d2bd"));
+        je.setFont(new Font("Verdana", Font.PLAIN, 88));
         primeraT.add(je, BorderLayout.CENTER);
     }
 
