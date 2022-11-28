@@ -134,10 +134,6 @@ public class Main extends JFrame {
         nombre = new JTextField();
         nombre.setPreferredSize(new Dimension(200, 40));
         contr = new JPasswordField();
-        //TODO TODO TODO
-        correo.setText("h@gmail.com");
-        contr.setText("Holaholita12?");
-        nombre.setText("pepe");
         contr.setPreferredSize(new Dimension(150, 40));
         errorContra = new JLabel("*** Contraseña entre 8-16 caractéres, 1 mayúscula, 1 miúscula y 1 dígito como mínimo. ");
         errorContra.setVisible(false);
